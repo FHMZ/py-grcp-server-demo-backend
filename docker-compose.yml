@@ -1,0 +1,37 @@
+version: '3.8' # Defines the Docker Compose file format version.
+
+services:
+  server: # Service for the API server.
+    build: ./server # Path to the Dockerfile for the server service.
+    container_name: ${API_CONTAINER_NAME} # Name of the container for easier identification.
+    ports:
+      - ${API_PORT} # Maps the container's internal port to the host machine.
+    volumes:
+      - ./server:/app # Mounts the local server directory to the container for live updates during development.
+    restart: always # Automatically restarts the container if it crashes.
+    depends_on: # Ensures the server starts after the database is ready.
+      - db
+
+  client: # Service for the client application.
+    build: ./client # Path to the Dockerfile for the client service.
+    container_name: ${CLIENT_CONTAINER_NAME} # Name of the container for easier identification.
+    ports:
+      - ${CLIENT_PORT} # Maps the container's internal port to the host machine.
+    volumes:
+      - ./client:/app # Mounts the local client directory to the container for live updates during development.
+    restart: always # Automatically restarts the container if it crashes.
+    depends_on: # Ensures the client starts after the server and database are ready.
+      - server
+      - db
+
+  db: # Service for the MySQL database.
+    image: ${DATABASE_IMAGE} # Uses the specified MySQL image from the .env file.
+    container_name: ${DATABASE_CONTAINER_NAME} # Name of the container for easier identification.
+    restart: always # Automatically restarts the container if it crashes.
+    environment: # Environment variables to configure the MySQL database.
+      MYSQL_DATABASE: ${DATABASE} # Name of the database to create.
+      MYSQL_USER: ${DATABASE_USER} # Non-root user for the database.
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD} # Password for the non-root user.
+      MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD} # Password for the root user.
+    ports:
+      - ${DATABASE_PORT} # Maps the MySQL port from the container to the host machine.

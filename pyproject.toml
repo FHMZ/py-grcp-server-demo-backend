@@ -1,0 +1,29 @@
+# Black configuration for automatic code formatting
+[tool.black]
+line-length = 88 # Sets the line length for Black
+target-version = ["py39"] # Targets Python 3.9
+exclude = '''
+/(
+    \.git
+    | \.venv
+    | __pycache__
+    | migrations
+    | .mypy_cache
+    | build
+    | dist
+)/
+'''
+
+# isort configuration for sorting imports
+[tool.isort]
+profile = "black" # Ensures compatibility with Black
+line_length = 88
+multi_line_output = 3
+include_trailing_comma = true
+skip = ["migrations", "__pycache__"]
+
+# Flake8 configuration for linting
+[tool.flake8]
+max-line-length = 88 # Matches Black's line length
+extend-ignore = ["E203", "W503"] # Compatible with Black formatting
+exclude = .git,__pycache__,build,dist,migrations
