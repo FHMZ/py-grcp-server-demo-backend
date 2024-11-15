@@ -3,7 +3,7 @@
 import grpc
 import warnings
 
-import app._grpc.pb2.users.users_pb2 as users__pb2
+import app.controllers.grpc.proto.users.users_pb2 as users__pb2
 
 GRPC_GENERATED_VERSION = '1.67.1'
 GRPC_VERSION = grpc.__version__

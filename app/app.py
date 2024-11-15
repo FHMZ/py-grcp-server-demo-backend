@@ -1,6 +1,6 @@
 import grpc
 from concurrent import futures
-from _grpc.pb2 import users_pb2_grpc
+from controllers.grpc.proto.users import users_pb2_grpc
 from controllers.controller import UsersController
 
 def serve():
