@@ -1,11 +1,11 @@
-from controllers.grpc.proto import users_pb2
+from controllers.grpc.proto.users import users_pb2
 from services.service import UserService
 
 class UserComponent:
     def __init__(self):
         self.user_service = UserService()
 
-    def get_users(self):
+    def get_all_users(self):
         users = self.user_service.get_all_users()
         return [users_pb2.User(id=user['id'], name=user['name'], password=user['password']) for user in users]
 

@@ -1,4 +1,5 @@
 import grpc
+import logging
 from concurrent import futures
 from controllers.grpc.proto.users import users_pb2_grpc
 from controllers.controller import UsersController
@@ -12,4 +13,6 @@ def serve():
     server.wait_for_termination()
 
 if __name__ == '__main__':
+    logging.basicConfig()
+    print("Starting server in: %S" % ('localhost:50051'))
     serve()
