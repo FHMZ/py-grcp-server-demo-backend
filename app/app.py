@@ -1,5 +1,6 @@
 import grpc
 import logging
+
 from concurrent import futures
 from controllers.grpc.proto.users import users_pb2_grpc
 from controllers.controller import UsersController
