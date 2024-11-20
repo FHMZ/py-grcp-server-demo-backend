@@ -1,9 +1,11 @@
-import grpc
 import logging
-
 from concurrent import futures
-from controllers.grpc.proto.users import users_pb2_grpc
-from controllers.controller import UsersController
+
+import grpc
+
+from app.controllers.controller import UsersController
+from app.controllers.grpc.proto.users import users_pb2_grpc
+
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
@@ -15,5 +17,5 @@ def serve():
 
 if __name__ == '__main__':
     logging.basicConfig()
-    print("Starting server in: %S" % ('localhost:50051'))
+    print("Starting server in: localhost:50051")
     serve()

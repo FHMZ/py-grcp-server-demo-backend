@@ -1,5 +1,6 @@
-from controllers.grpc.proto.users import users_pb2
-from services.service import UserService
+from app.controllers.grpc.proto.users import users_pb2
+from app.services.service import UserService
+
 
 class UserComponent:
     def __init__(self):
