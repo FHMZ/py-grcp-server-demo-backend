@@ -1,6 +1,6 @@
 import grpc
-from controllers.proto.pb2.users_pb2 import UserResponse, UserResponse
-from controllers.proto.pb2.users_pb2_grpc import UserServiceServicer
+from controllers.proto.users.pb2.users_pb2 import UserResponse, UserResponse
+from controllers.proto.users.pb2.users_pb2_grpc import UserServiceServicer
 from components.component import fetch_user
 
 
