@@ -2,11 +2,11 @@
     {
         "id": "1",
         "name": "Alice",
-        "password": "hashed_password_1"
+        "trx_id": "hashed_trx_1"
     },
     {
         "id": "2",
         "name": "Bob",
-        "password": "hashed_password_2"
+        "trx_id": "hashed_trx_2"
     }
 ]

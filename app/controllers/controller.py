@@ -1,18 +1,18 @@
-from app.components.component import UserComponent
-from grpc.proto.users import users_pb2, users_pb2_grpc
+import grpc
+from proto.pb2 import user_pb2, users_pb2_grpc
+from components.component import fetch_user
 
-class UsersController(users_pb2_grpc.UsersServicer):
-    def __init__(self):
-        self.user_component = UserComponent()
 
-    def GetUsers(self, request, context):
-        users = self.user_component.get_all_users()
-        return users_pb2.GetUsersResponse(users=users)
-
-    def CreateUser(self, request, context):
-        user = self.user_component.create_user(request.user)
-        return users_pb2.CreateUserResponse(user=user)
-
-    def DeleteUser(self, request, context):
-        user = self.user_component.delete_user(request.user)
-        return users_pb2.DeleteUserResponse(user=user)
+class UserController(users_pb2_grpc.UsersServicer):
+    def GetUser(self, request, context):
+        user_id = request.id
+        response = fetch_user(user_id)
+        if not response:
+            context.set_details("User not found")
+            context.set_code(grpc.StatusCode.NOT_FOUND)
+            return user_pb2.UserResponse()
+        return user_pb2.UserResponse(
+            id=response["id"],
+            name=response["name"],
+            trx_id=response["trx_id"]
+        )
