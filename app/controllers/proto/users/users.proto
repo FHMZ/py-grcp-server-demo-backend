@@ -2,16 +2,70 @@ syntax = "proto3";
 
 package user;
 
-service UserService {
-    rpc GetUser (UserRequest) returns (UserResponse);
-}
+import "google/api/annotations.proto";
 
-message UserRequest {
-    string id = 1;
-}
-
-message UserResponse {
+message User {
     string id = 1;
     string name = 2;
-    string trx_id = 3;
+    string trxId = 3;
+}
+
+message GetUsersRequest {
+    int32 page = 1;
+    int32 pageSize = 2;
+}
+
+message GetUsersResponse {
+    repeated User users = 1;
+}
+
+message GetUserByIdRequest {
+    string id = 1;
+}
+
+message GetUserByIdResponse {
+    User user = 1;
+}
+
+message CreateUserRequest {
+    User user = 1;
+}
+
+message CreateUserResponse {
+    User user = 1;
+}
+
+message DeleteUserRequest {
+    string id = 1;
+}
+
+message DeleteUserResponse {
+    string message = 1;
+}
+
+service UserGRPCAndRESTServices {
+    rpc GetUsers (GetUsersRequest) returns (GetUsersResponse) {
+        option (google.api.http) = {
+            get: "/users"
+        };
+    }
+
+    rpc GetUserById (GetUserByIdRequest) returns (GetUserByIdResponse) {
+        option (google.api.http) = {
+            get: "/users/{id}"
+        };
+    }
+
+    rpc CreateUser (CreateUserRequest) returns (CreateUserResponse) {
+        option (google.api.http) = {
+            post: "/users"
+            body: "user"
+        };
+    }
+
+    rpc DeleteUser (DeleteUserRequest) returns (DeleteUserResponse) {
+        option (google.api.http) = {
+            delete: "/users/{id}"
+        };
+    }
 }

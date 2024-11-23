@@ -22,19 +22,42 @@ _runtime_version.ValidateProtobufRuntimeVersion(
 _sym_db = _symbol_database.Default()
 
 
+from google.api import annotations_pb2 as google_dot_api_dot_annotations__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0busers.proto\x12\x04user\"\x19\n\x0bUserRequest\x12\n\n\x02id\x18\x01 \x01(\t\"8\n\x0cUserResponse\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0e\n\x06trx_id\x18\x03 \x01(\t2?\n\x0bUserService\x12\x30\n\x07GetUser\x12\x11.user.UserRequest\x1a\x12.user.UserResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0busers.proto\x12\x04user\x1a\x1cgoogle/api/annotations.proto\"/\n\x04User\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\r\n\x05trxId\x18\x03 \x01(\t\"1\n\x0fGetUsersRequest\x12\x0c\n\x04page\x18\x01 \x01(\x05\x12\x10\n\x08pageSize\x18\x02 \x01(\x05\"-\n\x10GetUsersResponse\x12\x19\n\x05users\x18\x01 \x03(\x0b\x32\n.user.User\" \n\x12GetUserByIdRequest\x12\n\n\x02id\x18\x01 \x01(\t\"/\n\x13GetUserByIdResponse\x12\x18\n\x04user\x18\x01 \x01(\x0b\x32\n.user.User\"-\n\x11\x43reateUserRequest\x12\x18\n\x04user\x18\x01 \x01(\x0b\x32\n.user.User\".\n\x12\x43reateUserResponse\x12\x18\n\x04user\x18\x01 \x01(\x0b\x32\n.user.User\"\x1f\n\x11\x44\x65leteUserRequest\x12\n\n\x02id\x18\x01 \x01(\t\"%\n\x12\x44\x65leteUserResponse\x12\x0f\n\x07message\x18\x01 \x01(\t2\xea\x02\n\x17UserGRPCAndRESTServices\x12I\n\x08GetUsers\x12\x15.user.GetUsersRequest\x1a\x16.user.GetUsersResponse\"\x0e\x82\xd3\xe4\x93\x02\x08\x12\x06/users\x12W\n\x0bGetUserById\x12\x18.user.GetUserByIdRequest\x1a\x19.user.GetUserByIdResponse\"\x13\x82\xd3\xe4\x93\x02\r\x12\x0b/users/{id}\x12U\n\nCreateUser\x12\x17.user.CreateUserRequest\x1a\x18.user.CreateUserResponse\"\x14\x82\xd3\xe4\x93\x02\x0e\"\x06/users:\x04user\x12T\n\nDeleteUser\x12\x17.user.DeleteUserRequest\x1a\x18.user.DeleteUserResponse\"\x13\x82\xd3\xe4\x93\x02\r*\x0b/users/{id}b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'users_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
-  _globals['_USERREQUEST']._serialized_start=21
-  _globals['_USERREQUEST']._serialized_end=46
-  _globals['_USERRESPONSE']._serialized_start=48
-  _globals['_USERRESPONSE']._serialized_end=104
-  _globals['_USERSERVICE']._serialized_start=106
-  _globals['_USERSERVICE']._serialized_end=169
+  _globals['_USERGRPCANDRESTSERVICES'].methods_by_name['GetUsers']._loaded_options = None
+  _globals['_USERGRPCANDRESTSERVICES'].methods_by_name['GetUsers']._serialized_options = b'\202\323\344\223\002\010\022\006/users'
+  _globals['_USERGRPCANDRESTSERVICES'].methods_by_name['GetUserById']._loaded_options = None
+  _globals['_USERGRPCANDRESTSERVICES'].methods_by_name['GetUserById']._serialized_options = b'\202\323\344\223\002\r\022\013/users/{id}'
+  _globals['_USERGRPCANDRESTSERVICES'].methods_by_name['CreateUser']._loaded_options = None
+  _globals['_USERGRPCANDRESTSERVICES'].methods_by_name['CreateUser']._serialized_options = b'\202\323\344\223\002\016\"\006/users:\004user'
+  _globals['_USERGRPCANDRESTSERVICES'].methods_by_name['DeleteUser']._loaded_options = None
+  _globals['_USERGRPCANDRESTSERVICES'].methods_by_name['DeleteUser']._serialized_options = b'\202\323\344\223\002\r*\013/users/{id}'
+  _globals['_USER']._serialized_start=51
+  _globals['_USER']._serialized_end=98
+  _globals['_GETUSERSREQUEST']._serialized_start=100
+  _globals['_GETUSERSREQUEST']._serialized_end=149
+  _globals['_GETUSERSRESPONSE']._serialized_start=151
+  _globals['_GETUSERSRESPONSE']._serialized_end=196
+  _globals['_GETUSERBYIDREQUEST']._serialized_start=198
+  _globals['_GETUSERBYIDREQUEST']._serialized_end=230
+  _globals['_GETUSERBYIDRESPONSE']._serialized_start=232
+  _globals['_GETUSERBYIDRESPONSE']._serialized_end=279
+  _globals['_CREATEUSERREQUEST']._serialized_start=281
+  _globals['_CREATEUSERREQUEST']._serialized_end=326
+  _globals['_CREATEUSERRESPONSE']._serialized_start=328
+  _globals['_CREATEUSERRESPONSE']._serialized_end=374
+  _globals['_DELETEUSERREQUEST']._serialized_start=376
+  _globals['_DELETEUSERREQUEST']._serialized_end=407
+  _globals['_DELETEUSERRESPONSE']._serialized_start=409
+  _globals['_DELETEUSERRESPONSE']._serialized_end=446
+  _globals['_USERGRPCANDRESTSERVICES']._serialized_start=449
+  _globals['_USERGRPCANDRESTSERVICES']._serialized_end=811
 # @@protoc_insertion_point(module_scope)
