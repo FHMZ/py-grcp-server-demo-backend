@@ -1,6 +1,6 @@
 import os
 import json
-from models import UserResponseDTO, UserPaginationResponseDTO
+from models.UserResponseDTO import UserResponseDTO
 
 class UserService:
     def __init__(self):
@@ -13,28 +13,27 @@ class UserService:
         with open(mock_path, 'r') as mock_file:
             self.users = json.load(mock_file)
 
-    def fetch_users(self, page: int, page_size: int):
-        start = (page - 1) * page_size
-        end = start + page_size
-        paginated_users = self.users[start:end]
-        total_items = len(self.users)
-        return UserPaginationResponseDTO(
-            items=[UserResponseDTO.from_dict(user) for user in paginated_users],
-            page=page,
-            page_size=page_size,
-            total_items=total_items
-    )
+    def fetch_users(self) -> list:
+        print("Starting fetch_users from UserService")
+        response = [user.to_dict() for user in (UserResponseDTO.from_dict(user) for user in self.users)]
+        return response
 
-    def fetch_user_by_id(self, user_id) -> UserResponseDTO:
-        for user in self.users:
-            if user['id'] == user_id:
-                return user
-        raise ValueError("User not found")
+    def fetch_user_by_id(self, user_id: int) -> UserResponseDTO:
+        print("Starting fetch_user_by_id from UserService")
+        user = next((user for user in self.users if user['id'] == user_id), None)
+    
+        if user is None:
+            raise ValueError(f"User with ID {user_id} not found")
+    
+        return UserResponseDTO.from_dict(user)
 
-    def add_user(self, user_data) -> str:
-        user_data['id'] = str(len(self.users) + 1)
-        self.users.append(user_data)
-        return user_data
+    def add_user(self, user_data) -> UserResponseDTO:
+        print("Starting add_user from UserService")
+        user_id = str(len(self.users) + 1)
+        user = UserResponseDTO(user_id, user_data['name'], user_data['trxId'])
+        self.users.append(user.to_dict())
+        return user
 
     def remove_user(self, user_id) -> str:
+        print("Starting remove_user from UserService")
         return f"User {user_id} deleted"

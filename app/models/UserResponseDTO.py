@@ -1,11 +1,22 @@
-from typing import Optional
 
 class UserResponseDTO:
-    def __init__(self, id: str, name: str, trxId: str):
+    def __init__(self, id: int, name: str, trx_id: str):
         self.id = id
         self.name = name
-        self.trxId = trxId
+        self.trx_id = trx_id
 
+    def to_dict(self) -> dict:
+        return {
+            "id": str(self.id),
+            "name": self.name,
+            "trxId": self.trx_id
+        }
+    
     @classmethod
-    def from_dict(cls, data: dict) -> "UserResponseDTO":
-        return cls(id=data["id"], name=data["name"], trxId=data["trxId"])
+    def from_dict(cls, data: dict) -> 'UserResponseDTO':
+        return cls(
+            id=data['id'],
+            name=data['name'],
+            trx_id=data['trx_id']
+        )
+

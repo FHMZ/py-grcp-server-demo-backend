@@ -1,48 +1,55 @@
 from flask import Flask, Blueprint, request, jsonify
 from components.component import UserComponent
+from models.UserResponseDTO import UserResponseDTO
 
 user_controller_app = Flask(__name__)
 user_controller = Blueprint('user_controller', __name__)
 
-class UserController:
+class UserRESTController:
     def __init__(self):
         self.user_component = UserComponent()
 
-    def get_users(self):
+    def get_users(self) -> list:
+        print("Starting method get_users from UserController")
         try:
-            page = request.args.get('page', default=1, type=int)
-            page_size = request.args.get('pageSize', default=10, type=int)
-            users = self.user_component.get_users(page, page_size)
-            return jsonify([{"id": user["id"], "name": user["name"], "trxId": user["trxId"]} for user in users]), 200
+            users = self.user_component.get_users()
+            print("Finished method get_users from UserController")
+            return users, 200
         except Exception as e:
             return jsonify({"error": str(e)}), 500
 
-    def get_user_by_id(self, user_id):
+    def get_user_by_id(self, user_id) -> UserResponseDTO:
+        print("Starting method get_user_by_id from UserController")
         try:
             user = self.user_component.get_user_by_id(user_id)
             if not user:
                 return jsonify({"error": "User not found"}), 404
-            return jsonify({"id": user["id"], "name": user["name"], "trxId": user["trxId"]}), 200
+            print("Finished method get_user_by_id from UserController")
+            return user, 200
         except Exception as e:
             return jsonify({"error": str(e)}), 500
 
-    def create_user(self):
+    def create_user(self) -> UserResponseDTO:
+        print("Starting method create_user from UserController")
         try:
             data = request.get_json()
             user = self.user_component.create_user({"name": data["name"], "trxId": data["trxId"]})
-            return jsonify({"id": user["id"], "name": user["name"], "trxId": user["trxId"]}), 201
+            print("Finished method create_user from UserController")
+            return user, 201
         except Exception as e:
             return jsonify({"error": str(e)}), 500
 
-    def delete_user(self, user_id):
+    def delete_user(self, user_id) -> str:
+        print("Starting method delete_user from UserController")
         try:
             result = self.user_component.delete_user(user_id)
-            return jsonify({"message": result}), 200
+            print("Finished method delete_user from UserController")
+            return result, 200
         except Exception as e:
             return jsonify({"error": str(e)}), 500
 
 # Register routes before blueprint registration
-user_controller_instance = UserController()
+user_controller_instance = UserRESTController()
 
 user_controller.route('/api/users', methods=["GET"])(user_controller_instance.get_users)
 user_controller.route('/api/users/<int:user_id>', methods=["GET"])(user_controller_instance.get_user_by_id)

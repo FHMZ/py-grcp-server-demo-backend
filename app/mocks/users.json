@@ -1,11 +1,11 @@
 [
     {
-        "id": "1",
+        "id": 1,
         "name": "Alice",
         "trx_id": "hashed_trx_1"
     },
     {
-        "id": "2",
+        "id": 2,
         "name": "Bob",
         "trx_id": "hashed_trx_2"
     }

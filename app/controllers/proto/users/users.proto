@@ -10,9 +10,12 @@ message User {
     string trxId = 3;
 }
 
+message NewUser {
+    string name = 2;
+    string trxId = 3;
+}
+
 message GetUsersRequest {
-    int32 page = 1;
-    int32 pageSize = 2;
 }
 
 message GetUsersResponse {
@@ -28,11 +31,11 @@ message GetUserByIdResponse {
 }
 
 message CreateUserRequest {
-    User user = 1;
+    NewUser new_user = 1;
 }
 
 message CreateUserResponse {
-    User user = 1;
+    string id = 1;
 }
 
 message DeleteUserRequest {
@@ -59,7 +62,7 @@ service UserGRPCAndRESTServices {
     rpc CreateUser (CreateUserRequest) returns (CreateUserResponse) {
         option (google.api.http) = {
             post: "/users"
-            body: "user"
+            body: "new_user"
         };
     }
 
