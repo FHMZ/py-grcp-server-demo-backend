@@ -27,13 +27,12 @@ class UserService:
     
         return user
 
-    def add_user(self, user_data) -> UserResponseDTO:
+    def add_user(self, user_data: dict) -> str:
         print("Starting add_user from UserService")
-        user_id = str(len(self.users) + 1)
-        user = UserResponseDTO(user_id, user_data['name'], user_data['trx_id'])
-        self.users.append(user.to_dict())
-        return user
+        user_id = len(self.users) + 1
+        user_name = user_data["name"]
+        return f"User {user_id} - {user_name} created"
 
-    def remove_user(self, user_id) -> str:
+    def remove_user(self, user_id: int) -> str:
         print("Starting remove_user from UserService")
         return f"User {user_id} deleted"

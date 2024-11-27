@@ -1,6 +1,7 @@
 from flask import Flask, Blueprint, request, jsonify
 from components.component import UserComponent
 from models.user_response_dto import UserResponseDTO
+from models.exceptions.api_response_exception_dto import ApiResponseExceptionDTO
 
 user_controller_app = Flask(__name__)
 user_controller = Blueprint('user_controller', __name__)
@@ -9,14 +10,12 @@ class UserRESTController:
     def __init__(self):
         self.user_component = UserComponent()
 
+    @ApiResponseExceptionDTO.handle_exception
     def get_users(self) -> list[UserResponseDTO]:
         print("Starting method get_users from UserController")
-        try:
-            users = self.user_component.get_users()
-            print("Finished method get_users from UserController")
-            return users, 200
-        except Exception as e:
-            return jsonify({"error": str(e)}), 500
+        users = self.user_component.get_users()
+        print("Finished method get_users from UserController")
+        return users, 200
 
     def get_user_by_id(self, user_id: int) -> UserResponseDTO:
         print("Starting method get_user_by_id from UserController")
@@ -27,17 +26,17 @@ class UserRESTController:
         except Exception as e:
             return jsonify({"error": str(e)}), 500
 
-    def create_user(self) -> UserResponseDTO:
+    def create_user(self) -> str:
         print("Starting method create_user from UserController")
         try:
             data = request.get_json()
-            user = self.user_component.create_user({"name": data["name"], "trxId": data["trxId"]})
+            user = self.user_component.create_user(data)
             print("Finished method create_user from UserController")
             return user, 201
         except Exception as e:
             return jsonify({"error": str(e)}), 500
 
-    def delete_user(self, user_id) -> str:
+    def delete_user(self, user_id: int) -> str:
         print("Starting method delete_user from UserController")
         try:
             result = self.user_component.delete_user(user_id)
