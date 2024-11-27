@@ -1,5 +1,9 @@
 
 class UserResponseDTO:
+    id: int
+    name: str
+    email: str
+
     def __init__(self, id: int, name: str, trx_id: str):
         self.id = id
         self.name = name
@@ -7,9 +11,9 @@ class UserResponseDTO:
 
     def to_dict(self) -> dict:
         return {
-            "id": str(self.id),
+            "id": self.id,
             "name": self.name,
-            "trxId": self.trx_id
+            "trx_id": self.trx_id
         }
     
     @classmethod

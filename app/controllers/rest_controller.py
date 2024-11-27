@@ -1,6 +1,6 @@
 from flask import Flask, Blueprint, request, jsonify
 from components.component import UserComponent
-from models.UserResponseDTO import UserResponseDTO
+from models.user_response_dto import UserResponseDTO
 
 user_controller_app = Flask(__name__)
 user_controller = Blueprint('user_controller', __name__)
@@ -9,7 +9,7 @@ class UserRESTController:
     def __init__(self):
         self.user_component = UserComponent()
 
-    def get_users(self) -> list:
+    def get_users(self) -> list[UserResponseDTO]:
         print("Starting method get_users from UserController")
         try:
             users = self.user_component.get_users()
@@ -18,12 +18,10 @@ class UserRESTController:
         except Exception as e:
             return jsonify({"error": str(e)}), 500
 
-    def get_user_by_id(self, user_id) -> UserResponseDTO:
+    def get_user_by_id(self, user_id: int) -> UserResponseDTO:
         print("Starting method get_user_by_id from UserController")
         try:
             user = self.user_component.get_user_by_id(user_id)
-            if not user:
-                return jsonify({"error": "User not found"}), 404
             print("Finished method get_user_by_id from UserController")
             return user, 200
         except Exception as e:

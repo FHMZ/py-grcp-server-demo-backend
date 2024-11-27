@@ -1,11 +1,11 @@
 from services.service import UserService
-from models.UserResponseDTO import UserResponseDTO
+from models.user_response_dto import UserResponseDTO
 
 class UserComponent:
     def __init__(self):
         self.user_service = UserService()
 
-    def get_users(self) -> list:
+    def get_users(self) -> list[UserResponseDTO]:
         print("Starting get_users from UserComponent")
         return self.user_service.fetch_users()
 
