@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, request
+from flask import Flask, Blueprint, request, jsonify
 from components.component import UserComponent
 from models.user_response_dto import UserResponseDTO
 from models.exceptions.api_response_exception_dto import ApiResponseExceptionDTO
@@ -18,14 +18,14 @@ class UserRESTController:
         return users, 200
 
     @ApiResponseExceptionDTO.handle_exception
-    def get_user_by_id(self, user_id: int) -> UserResponseDTO:
+    def get_user_by_id(self, user_id: int):
         print("Starting method get_user_by_id from UserController")
         user = self.user_component.get_user_by_id(user_id)
         print("Finished method get_user_by_id from UserController")
         return user, 200
 
     @ApiResponseExceptionDTO.handle_exception
-    def create_user(self) -> str:
+    def create_user(self):
         print("Starting method create_user from UserController")
         data = request.get_json()
         user = self.user_component.create_user(data)
