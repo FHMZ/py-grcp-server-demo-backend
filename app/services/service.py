@@ -31,8 +31,9 @@ class UserService:
         print("Starting add_user from UserService")
         user_id = len(self.users) + 1
         user_name = user_data["name"]
-        return f"User {user_id} - {user_name} created"
+        return f"User [{user_id} - {user_name}] has been Created."
 
     def remove_user(self, user_id: int) -> str:
         print("Starting remove_user from UserService")
-        return f"User {user_id} deleted"
+        user = next((user for user in self.users if user["id"] == user_id), None)
+        return f"User [{user_id} - {user["name"]}] has been Deleted."

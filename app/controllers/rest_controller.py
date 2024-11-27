@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, request, jsonify
+from flask import Flask, Blueprint, request
 from components.component import UserComponent
 from models.user_response_dto import UserResponseDTO
 from models.exceptions.api_response_exception_dto import ApiResponseExceptionDTO
@@ -17,33 +17,27 @@ class UserRESTController:
         print("Finished method get_users from UserController")
         return users, 200
 
+    @ApiResponseExceptionDTO.handle_exception
     def get_user_by_id(self, user_id: int) -> UserResponseDTO:
         print("Starting method get_user_by_id from UserController")
-        try:
-            user = self.user_component.get_user_by_id(user_id)
-            print("Finished method get_user_by_id from UserController")
-            return user, 200
-        except Exception as e:
-            return jsonify({"error": str(e)}), 500
+        user = self.user_component.get_user_by_id(user_id)
+        print("Finished method get_user_by_id from UserController")
+        return user, 200
 
+    @ApiResponseExceptionDTO.handle_exception
     def create_user(self) -> str:
         print("Starting method create_user from UserController")
-        try:
-            data = request.get_json()
-            user = self.user_component.create_user(data)
-            print("Finished method create_user from UserController")
-            return user, 201
-        except Exception as e:
-            return jsonify({"error": str(e)}), 500
+        data = request.get_json()
+        user = self.user_component.create_user(data)
+        print("Finished method create_user from UserController")
+        return user, 201
 
+    @ApiResponseExceptionDTO.handle_exception
     def delete_user(self, user_id: int) -> str:
         print("Starting method delete_user from UserController")
-        try:
-            result = self.user_component.delete_user(user_id)
-            print("Finished method delete_user from UserController")
-            return result, 200
-        except Exception as e:
-            return jsonify({"error": str(e)}), 500
+        result = self.user_component.delete_user(user_id)
+        print("Finished method delete_user from UserController")
+        return result, 200
 
 # Register routes before blueprint registration
 user_controller_instance = UserRESTController()
