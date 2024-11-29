@@ -1,5 +1,5 @@
 import logging
-import json
+from grpc import StatusCode
 from components.component import UserComponent
 from controllers.proto.users.pb2.users_pb2 import CreateUserResponse, GetUsersResponse, GetUserByIdResponse, DeleteUserResponse, User
 from controllers.proto.users.pb2.users_pb2_grpc import UserGRPCAndRESTServicesServicer as UserServicer
@@ -34,10 +34,27 @@ class UserGRPCController(UserServicer):
 
     def GetUserById(self, request, context) -> GetUserByIdResponse:
         print("Starting GetUserById from UserGRPCController")
-        user = self.user_component.get_user_by_id(request.id)
-        if not user:
-            context.abort(StatusCode.NOT_FOUND, "User not found")
-        return GetUserByIdResponse(user=User(**user))
+
+        user = {}
+
+        try:
+            res = self.user_component.get_user_by_id(2)
+            user = User(
+                    id=str(res["id"]), 
+                    name=res["name"], 
+                    trx_id=res["trx_id"]
+                )
+            if not user:
+                logger.error(f"Error in GetUserById: {str(e)}")
+                context.abort(StatusCode.NOT_FOUND, "User not found")
+                raise
+        except Exception as e:
+            logger.error(f"Error in GetUserById: {str(e)}")
+            context.abort(StatusCode.INTERNAL, "We had errors to get UserID")
+            raise
+
+        print("Finished method GetUserById from UserGRPCController")
+        return GetUserByIdResponse(user=user)
 
     def CreateUser(self, request, context) -> CreateUserResponse:
         print("Starting CreateUser from UserGRPCController")
