@@ -1,6 +1,7 @@
 from flask import jsonify
 from typing import Callable, Any
 from functools import wraps
+from grpc import StatusCode
 
 class ApiResponseExceptionDTO:
 
@@ -12,14 +13,4 @@ class ApiResponseExceptionDTO:
                 return func(*args, **kwargs)
             except Exception as e:
                 return jsonify({"error": str(e)}), 500
-        return wrapper
-    
-    @staticmethod
-    def handle_grpc_exception(func):       
-        @wraps(func)
-        def wrapper(self, request, context):
-            try:
-                return func(self, request, context)
-            except Exception as e:
-                context.abort(StatusCode.INTERNAL, "Internal server error")
         return wrapper

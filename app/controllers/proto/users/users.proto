@@ -1,18 +1,18 @@
 syntax = "proto3";
 
-package user;
+package users;
 
 import "google/api/annotations.proto";
 
 message User {
     string id = 1;
     string name = 2;
-    string trxId = 3;
+    string trx_id = 3;
 }
 
 message NewUser {
     string name = 2;
-    string trxId = 3;
+    string trx_id = 3;
 }
 
 message GetUsersRequest {
@@ -35,7 +35,7 @@ message CreateUserRequest {
 }
 
 message CreateUserResponse {
-    string id = 1;
+    string message = 1;
 }
 
 message DeleteUserRequest {

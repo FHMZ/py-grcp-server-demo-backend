@@ -35,22 +35,22 @@ class UserGRPCAndRESTServicesStub(object):
             channel: A grpc.Channel.
         """
         self.GetUsers = channel.unary_unary(
-                '/user.UserGRPCAndRESTServices/GetUsers',
+                '/users.UserGRPCAndRESTServices/GetUsers',
                 request_serializer=users__pb2.GetUsersRequest.SerializeToString,
                 response_deserializer=users__pb2.GetUsersResponse.FromString,
                 _registered_method=True)
         self.GetUserById = channel.unary_unary(
-                '/user.UserGRPCAndRESTServices/GetUserById',
+                '/users.UserGRPCAndRESTServices/GetUserById',
                 request_serializer=users__pb2.GetUserByIdRequest.SerializeToString,
                 response_deserializer=users__pb2.GetUserByIdResponse.FromString,
                 _registered_method=True)
         self.CreateUser = channel.unary_unary(
-                '/user.UserGRPCAndRESTServices/CreateUser',
+                '/users.UserGRPCAndRESTServices/CreateUser',
                 request_serializer=users__pb2.CreateUserRequest.SerializeToString,
                 response_deserializer=users__pb2.CreateUserResponse.FromString,
                 _registered_method=True)
         self.DeleteUser = channel.unary_unary(
-                '/user.UserGRPCAndRESTServices/DeleteUser',
+                '/users.UserGRPCAndRESTServices/DeleteUser',
                 request_serializer=users__pb2.DeleteUserRequest.SerializeToString,
                 response_deserializer=users__pb2.DeleteUserResponse.FromString,
                 _registered_method=True)
@@ -108,9 +108,9 @@ def add_UserGRPCAndRESTServicesServicer_to_server(servicer, server):
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'user.UserGRPCAndRESTServices', rpc_method_handlers)
+            'users.UserGRPCAndRESTServices', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('user.UserGRPCAndRESTServices', rpc_method_handlers)
+    server.add_registered_method_handlers('users.UserGRPCAndRESTServices', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
@@ -131,7 +131,7 @@ class UserGRPCAndRESTServices(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/user.UserGRPCAndRESTServices/GetUsers',
+            '/users.UserGRPCAndRESTServices/GetUsers',
             users__pb2.GetUsersRequest.SerializeToString,
             users__pb2.GetUsersResponse.FromString,
             options,
@@ -158,7 +158,7 @@ class UserGRPCAndRESTServices(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/user.UserGRPCAndRESTServices/GetUserById',
+            '/users.UserGRPCAndRESTServices/GetUserById',
             users__pb2.GetUserByIdRequest.SerializeToString,
             users__pb2.GetUserByIdResponse.FromString,
             options,
@@ -185,7 +185,7 @@ class UserGRPCAndRESTServices(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/user.UserGRPCAndRESTServices/CreateUser',
+            '/users.UserGRPCAndRESTServices/CreateUser',
             users__pb2.CreateUserRequest.SerializeToString,
             users__pb2.CreateUserResponse.FromString,
             options,
@@ -212,7 +212,7 @@ class UserGRPCAndRESTServices(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/user.UserGRPCAndRESTServices/DeleteUser',
+            '/users.UserGRPCAndRESTServices/DeleteUser',
             users__pb2.DeleteUserRequest.SerializeToString,
             users__pb2.DeleteUserResponse.FromString,
             options,
