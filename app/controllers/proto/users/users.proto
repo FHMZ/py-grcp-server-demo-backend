@@ -11,8 +11,8 @@ message User {
 }
 
 message NewUser {
-    string name = 2;
-    string trx_id = 3;
+    string name = 1;
+    string trx_id = 2;
 }
 
 message GetUsersRequest {

@@ -38,16 +38,19 @@ class UserGRPCController(UserServicer):
         user = {}
 
         try:
-            res = self.user_component.get_user_by_id(2)
+            res = self.user_component.get_user_by_id(int(request.id))
+
+            if not res:
+                logger.error(f"Error in GetUserById: {str(e)}")
+                context.abort(StatusCode.NOT_FOUND, "User not found")
+                raise
+
             user = User(
                     id=str(res["id"]), 
                     name=res["name"], 
                     trx_id=res["trx_id"]
                 )
-            if not user:
-                logger.error(f"Error in GetUserById: {str(e)}")
-                context.abort(StatusCode.NOT_FOUND, "User not found")
-                raise
+                
         except Exception as e:
             logger.error(f"Error in GetUserById: {str(e)}")
             context.abort(StatusCode.INTERNAL, "We had errors to get UserID")
@@ -58,10 +61,34 @@ class UserGRPCController(UserServicer):
 
     def CreateUser(self, request, context) -> CreateUserResponse:
         print("Starting CreateUser from UserGRPCController")
-        user = self.user_component.create_user({"name": request.user.name, "trx_id": request.user.trx_id})
-        return CreateUserResponse(user=User(**user))
+        
+        res = ""
+
+        try: 
+            req_name = request.new_user.name
+            req_trx_id = request.new_user.trx_id
+            user_body = { "name": req_name, "trx_id": req_trx_id }
+
+            res = self.user_component.create_user(user_body)
+        except Exception as e:
+            logger.error(f"Error in GetUserById: {str(e)}")
+            context.abort(StatusCode.INTERNAL, "We had errors to get UserID")
+            raise
+
+        print("Finished method CreateUser from UserGRPCController")
+        return CreateUserResponse(message=res)
 
     def DeleteUser(self, request, context) -> DeleteUserResponse:
         print("Starting DeleteUser from UserGRPCController")
-        result = self.user_component.delete_user(request.id)
-        return DeleteUserResponse(message=result["message"])
+
+        res = ""
+
+        try:
+            res = self.user_component.delete_user(int(request.id))
+        except Exception as e:
+            logger.error(f"Error in GetUserById: {str(e)}")
+            context.abort(StatusCode.INTERNAL, "We had errors to get UserID")
+            raise
+
+        print("Finished method DeleteUser from UserGRPCController")
+        return DeleteUserResponse(message=res)
